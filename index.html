@@ -50,26 +50,18 @@
           <span class="code-dot"></span>
           <span class="code-filename">main.mach</span>
         </div>
-        <pre><code><span class="kw">use</span>          <span class="mod">std.runtime</span>;
-<span class="kw">use</span> <span class="alias">print</span>:   <span class="mod">std.print</span>;
-<span class="kw">use</span> <span class="alias">alloc</span>:   <span class="mod">std.allocator</span>;
+        <pre><code><span class="kw">use</span>        <span class="mod">std.runtime</span>;
+<span class="kw">use</span> <span class="alias">print</span>: <span class="mod">std.print</span>;
 
-<span class="kw">rec</span> <span class="type">Point</span> {
-    x: <span class="type">f64</span>;
-    y: <span class="type">f64</span>;
-}
-
-<span class="kw">fun</span> (<span class="param">this</span>: &<span class="type">Point</span>) <span class="fn">magnitude</span>() <span class="type">f64</span> {
-    <span class="kw">ret</span> sqrt(this.x * this.x + this.y * this.y);
+<span class="kw">fun</span> <span class="fn">fib</span>(<span class="param">n</span>: <span class="type">i64</span>) <span class="type">i64</span> {
+    <span class="kw">if</span> (n &lt; <span class="num">2</span>) { <span class="kw">ret</span> n; }
+    <span class="kw">ret</span> fib(n - <span class="num">1</span>) + fib(n - <span class="num">2</span>);
 }
 
 <span class="ct">$main.symbol</span> = <span class="str">"main"</span>;
-<span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: &&<span class="type">u8</span>) <span class="type">i64</span> {
-    <span class="kw">var</span> a: <span class="type">alloc.Allocator</span> = alloc.default();
-    <span class="kw">fin</span> { alloc.allocator_dnit(?a); }
-
-    <span class="kw">val</span> p: <span class="type">Point</span> = <span class="type">Point</span>{x: <span class="num">3.0</span>, y: <span class="num">4.0</span>};
-    print.printf(<span class="str">"magnitude: %f\n"</span>, p.magnitude());
+<span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
+    print.printf(<span class="str">"hello, mach\n"</span>);
+    print.printf(<span class="str">"fib(10) = %d\n"</span>, fib(<span class="num">10</span>));
     <span class="kw">ret</span> <span class="num">0</span>;
 }</code></pre>
       </div>
@@ -93,9 +85,9 @@
         <div class="philosophy-col">
           <h3>What Mach Is Not</h3>
           <ul>
-            <li><strong>Batteries-included</strong> &mdash; the standard library provides building blocks, not frameworks</li>
-            <li><strong>Flexible</strong> &mdash; if there are two ways to do something, one of them is wrong</li>
-            <li><strong>Hand-holding</strong> &mdash; safety is a partnership between the language and the programmer</li>
+            <li><strong>Magic</strong> &mdash; no garbage collector, no hidden runtime, no compiler-inserted behavior</li>
+            <li><strong>A framework</strong> &mdash; the standard library is building blocks; you compose your program, it won't</li>
+            <li><strong>Permissive</strong> &mdash; no dialects, no style knobs. One path, by design</li>
           </ul>
         </div>
       </div>
@@ -129,7 +121,7 @@
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3>No Hidden Behavior</h3>
-          <p>Pointers are explicit: <code>*T</code> types, <code>?</code> to take an address, <code>@</code> to dereference. Casts are explicit too (<code>::</code> and <code>:~</code>), so nothing happens that you did not ask for.</p>
+          <p>The runtime, entry point, syscalls, and every allocation are ordinary Mach code you can open and read. The standard library is written in the same language you write &mdash; nothing is privileged, nothing is implicit. The program does exactly what its source says.</p>
         </div>
 
         <div class="feature-card">
