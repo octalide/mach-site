@@ -16,34 +16,44 @@
       var p = ((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent || "").toLowerCase();
       var os = p.indexOf("win") > -1 ? "windows" : p.indexOf("mac") > -1 ? "macos" : "linux";
       root.classList.add("os-" + os);
+      function select(next) {
+        root.classList.remove("os-linux", "os-macos", "os-windows");
+        root.classList.add("os-" + next);
+        document.querySelectorAll(".install-os-btn").forEach(function (b) {
+          b.setAttribute("aria-pressed", b.getAttribute("data-os") === next ? "true" : "false");
+        });
+      }
       document.addEventListener("click", function (e) {
-        var pick = e.target.closest && e.target.closest(".install-os-btn");
+        var pick = e.target.closest(".install-os-btn");
         if (pick) {
-          var next = pick.getAttribute("data-os");
-          root.classList.remove("os-linux", "os-macos", "os-windows");
-          root.classList.add("os-" + next);
-          document.querySelectorAll(".install-os-btn").forEach(function (b) {
-            b.setAttribute("aria-pressed", b.getAttribute("data-os") === next ? "true" : "false");
-          });
+          select(pick.getAttribute("data-os"));
           return;
         }
-        var copy = e.target.closest && e.target.closest(".copy-btn");
+        var copy = e.target.closest(".copy-btn");
         if (copy) {
           var label = copy.querySelector(".copy-label");
-          navigator.clipboard.writeText(copy.parentElement.querySelector("code").textContent).then(function () {
-            copy.classList.add("copied");
-            label.textContent = "Copied";
+          var flash = function (text, ok) {
+            copy.classList.toggle("copied", ok);
+            label.textContent = text;
             clearTimeout(copy._t);
             copy._t = setTimeout(function () {
               copy.classList.remove("copied");
               label.textContent = "Copy";
             }, 1500);
+          };
+          if (!navigator.clipboard) {
+            flash("Failed", false);
+            return;
+          }
+          navigator.clipboard.writeText(copy.parentElement.querySelector("code").textContent).then(function () {
+            flash("Copied", true);
+          }, function () {
+            flash("Failed", false);
           });
         }
       });
       document.addEventListener("DOMContentLoaded", function () {
-        var active = document.querySelector('.install-os-btn[data-os="' + os + '"]');
-        if (active) active.setAttribute("aria-pressed", "true");
+        select(os);
       });
     })();
   </script>
