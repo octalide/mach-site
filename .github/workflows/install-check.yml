@@ -1,0 +1,15 @@
+name: Install Forwarder Check
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for f in install.sh install.ps1; do
+            curl -fsSIL -o /dev/null "https://github.com/octalide/mach/releases/latest/download/$f"
+          done
