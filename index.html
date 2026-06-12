@@ -186,10 +186,13 @@
           <div class="step-number">1</div>
           <div class="step-content">
             <h3>Install mach</h3>
-            <p class="step-note">Download the latest <a href="https://github.com/octalide/mach/releases" target="_blank">release binary</a>, then put it on your <code>PATH</code>.</p>
+            <p class="step-note">The installer fetches the latest <a href="https://github.com/octalide/mach/releases" target="_blank">release</a> and puts <code>mach</code> on your <code>PATH</code>.</p>
             <div class="code-block">
-              <pre><code>chmod +x mach
-sudo mv mach /usr/local/bin/</code></pre>
+              <pre><code>curl -fsSL https://machlang.org/install.sh | sh</code></pre>
+            </div>
+            <p class="step-note">On Windows, run it in PowerShell:</p>
+            <div class="code-block">
+              <pre><code>irm https://machlang.org/install.ps1 | iex</code></pre>
             </div>
           </div>
         </div>
