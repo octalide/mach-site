@@ -160,14 +160,6 @@ code {
   align-items: center;
   gap: 0.55rem;
   margin-top: 1.5rem;
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border-light);
-}
-
-.btn-discord:hover {
-  border-color: var(--magenta);
-  color: var(--magenta);
 }
 
 .btn-discord svg {
@@ -256,14 +248,6 @@ code {
 
 /* ── Code Block (Hero) ───────────────────────────────────── */
 
-.hero-code {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
-}
-
 .code-header {
   display: flex;
   align-items: center;
@@ -287,20 +271,6 @@ code {
   color: var(--text-dim);
 }
 
-.hero-code pre {
-  padding: 1.25rem 1.5rem;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  line-height: 1.7;
-}
-
-.hero-code code {
-  background: none;
-  padding: 0;
-  font-size: inherit;
-}
-
 /* Syntax Highlighting */
 .kw { color: var(--magenta); }
 .type { color: #79c0ff; }
@@ -311,7 +281,6 @@ code {
 .alias { color: #ffa657; }
 .param { color: #e0e0e0; }
 .ct { color: #ff7b72; }
-.sh-comment { color: #484f58; }
 
 /* ── Sections ────────────────────────────────────────────── */
 
@@ -355,8 +324,7 @@ code {
   line-height: 1.6;
 }
 
-/* ── Code window (shared treatment, mirrors hero-code) ───── */
-
+.hero-code,
 .code-window {
   background: var(--code-bg);
   border: 1px solid var(--border);
@@ -365,6 +333,7 @@ code {
   box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
 }
 
+.hero-code pre,
 .code-window pre {
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
@@ -373,13 +342,15 @@ code {
   line-height: 1.7;
 }
 
+.hero-code code,
 .code-window code {
   background: none;
   padding: 0;
   font-size: inherit;
 }
 
-.cmt { color: #6e7681; }
+.cmt,
+.term-note { color: #6e7681; }
 
 /* ── Why mach: code demonstrations ───────────────────────── */
 
@@ -451,10 +422,6 @@ code {
   color: var(--text);
 }
 
-.term-note {
-  color: #6e7681;
-}
-
 .get-started-next {
   margin-top: 1.75rem;
   color: var(--text-dim);
@@ -469,45 +436,6 @@ code {
 
 .get-started-next a:hover {
   color: var(--text-bright);
-}
-
-.install-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
-
-.install-step {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-.step-number {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--magenta);
-  color: var(--magenta);
-  font-weight: 700;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.1rem;
-}
-
-.step-content {
-  flex: 1;
-}
-
-.step-content h3 {
-  font-size: 1.05rem;
-  color: var(--text-bright);
-  margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .step-note {
@@ -672,11 +600,6 @@ html.js .copy-btn {
   margin: 0;
 }
 
-.get-started-links {
-  display: flex;
-  gap: 1rem;
-}
-
 /* ── Footer ──────────────────────────────────────────────── */
 
 .footer {
@@ -783,7 +706,13 @@ html.js .copy-btn {
     gap: 2.5rem;
   }
 
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .demo,
+  .demo:nth-child(even) {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .demo:nth-child(even) .demo-window {
+    order: 0;
   }
 }
