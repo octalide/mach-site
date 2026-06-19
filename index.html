@@ -145,7 +145,7 @@
     <span class="kw">ret</span> fib(n - <span class="num">1</span>) + fib(n - <span class="num">2</span>);
 }
 
-<span class="ct">$main.symbol</span> = <span class="str">"main"</span>;
+<span class="ct">`symbol(</span><span class="str">"main"</span><span class="ct">)`</span>
 <span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
     print.printf(<span class="str">"hello, mach\n"</span>);
     print.printf(<span class="str">"fib(10) = %d\n"</span>, fib(<span class="num">10</span>));
@@ -174,7 +174,7 @@
             <pre><code><span class="kw">use</span>          <span class="mod">std.runtime</span>;
 <span class="kw">use</span> <span class="alias">print</span>:   <span class="mod">std.print</span>;
 
-<span class="ct">$main.symbol</span> = <span class="str">"main"</span>;
+<span class="ct">`symbol(</span><span class="str">"main"</span><span class="ct">)`</span>
 <span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
     print.<span class="fn">println</span>(<span class="str">"Hello, World!"</span>);
     <span class="kw">ret</span> <span class="num">0</span>;
