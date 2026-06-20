@@ -78,17 +78,6 @@
         <a class="card" href="soon.html"><div class="card-title">Manifest</div><div class="card-desc">Declare artifacts, targets, and dependencies in mach.toml.</div></a>
       </div>
 
-      <h2 id="what-you-read">What you read is what executes</h2>
-      <p>mach has no hidden runtime and no hidden allocation. The entry point is ordinary code: you name the symbol and pull in the runtime yourself. Nothing runs that you did not write.</p>
-      <pre class="code"><code><span class="kw">use</span>        <span class="mod">std.runtime</span>;
-<span class="kw">use</span> <span class="alias">print</span>: <span class="mod">std.print</span>;
-
-<span class="deco">#[symbol(</span><span class="str">"main"</span><span class="deco">)]</span>
-<span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
-    print.<span class="fn">println</span>(<span class="str">"Hello, World!"</span>);
-    <span class="kw">ret</span> <span class="num">0</span>;
-}</code></pre>
-
       <h2 id="how-docs-work">How these docs work</h2>
       <p>mach moves quickly and is explicit about it, so every page calls out the versions that matter. Watch for badges and callouts:</p>
       <p>
@@ -117,7 +106,6 @@
 
     <nav class="toc" aria-label="On this page">
       <div class="toc-title">On this page</div>
-      <a href="#what-you-read">What you read is what executes</a>
       <a href="#how-docs-work">How these docs work</a>
       <a href="#next">Where to go next</a>
     </nav>
