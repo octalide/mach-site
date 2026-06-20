@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mach docs: Overview</title>
+  <meta name="description" content="Documentation for the mach programming language.">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/mach_32.png">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <button class="menu-toggle" aria-label="Toggle navigation"><span></span></button>
+    <a class="brand" href="index.html">
+      <img src="../assets/mach_32.png" alt="" width="22" height="22">
+      <span>mach</span><span class="brand-docs">docs</span>
+    </a>
+    <span class="badge badge-version">v2.4.1</span>
+    <div class="topbar-spacer"></div>
+    <button class="search-trigger" aria-label="Search the docs">
+      <span class="st-text">Search</span><span class="kbd">Ctrl K</span>
+    </button>
+    <div class="topbar-actions">
+      <a href="../index.html">Home</a>
+      <a href="https://github.com/octalide/mach" target="_blank">GitHub</a>
+    </div>
+  </header>
+
+  <div class="docs-layout">
+    <aside class="sidebar">
+      <nav>
+        <div class="nav-group">
+          <div class="nav-group-label">Start</div>
+          <a class="nav-link active" href="index.html">Overview</a>
+          <a class="nav-link soon" href="#">Install</a>
+          <a class="nav-link soon" href="#">Hello world</a>
+          <a class="nav-link soon" href="#">Project layout</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">Language</div>
+          <a class="nav-link soon" href="#">Types</a>
+          <a class="nav-link soon" href="#">Values and variables</a>
+          <a class="nav-link soon" href="#">Functions</a>
+          <a class="nav-link soon" href="#">Expressions</a>
+          <a class="nav-link soon" href="#">Statements</a>
+          <a class="nav-link soon" href="#">Records and unions</a>
+          <a class="nav-link soon" href="#">Modules</a>
+          <a class="nav-link soon" href="#">Visibility</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">Comptime</div>
+          <a class="nav-link soon" href="#">The comptime channel</a>
+          <a class="nav-link soon" href="#">Intrinsics</a>
+          <a class="nav-link soon" href="#">Control flow</a>
+          <a class="nav-link" href="variadics.html">Variadic packs</a>
+          <a class="nav-link soon" href="#">Decorators</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">Tooling</div>
+          <a class="nav-link soon" href="#">CLI</a>
+          <a class="nav-link soon" href="#">Manifest</a>
+          <a class="nav-link soon" href="#">Dependencies</a>
+          <a class="nav-link soon" href="#">Testing</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="breadcrumb">Docs</div>
+      <h1>mach documentation</h1>
+      <p class="lead">A small, explicit systems language. These pages are a pamphlet, not a bible: short, example-first, and honest about what changed between versions.</p>
+
+      <div class="cards">
+        <a class="card" href="#"><div class="card-title">Install</div><div class="card-desc">One line to the latest release. No external toolchain to set up.</div></a>
+        <a class="card" href="#"><div class="card-title">Hello world</div><div class="card-desc">Name your entry symbol and import the runtime yourself.</div></a>
+        <a class="card" href="variadics.html"><div class="card-title">Comptime</div><div class="card-desc">Monomorphized generics, variadic packs, and compile-time control.</div></a>
+        <a class="card" href="#"><div class="card-title">Manifest</div><div class="card-desc">Declare artifacts, targets, and dependencies in mach.toml.</div></a>
+      </div>
+
+      <h2 id="what-you-read">What you read is what executes</h2>
+      <p>mach has no hidden runtime and no hidden allocation. The entry point is ordinary code: you name the symbol and pull in the runtime yourself. Nothing runs that you did not write.</p>
+      <pre class="code"><code><span class="kw">use</span>        <span class="mod">std.runtime</span>;
+<span class="kw">use</span> <span class="alias">print</span>: <span class="mod">std.print</span>;
+
+<span class="deco">#[symbol(</span><span class="str">"main"</span><span class="deco">)]</span>
+<span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
+    print.<span class="fn">println</span>(<span class="str">"Hello, World!"</span>);
+    <span class="kw">ret</span> <span class="num">0</span>;
+}</code></pre>
+
+      <h2 id="how-docs-work">How these docs work</h2>
+      <p>mach moves quickly and is explicit about it, so every page calls out the versions that matter. Watch for badges and callouts:</p>
+      <p>
+        <span class="badge badge-version">v2.4.1</span>
+        <span class="badge badge-new">added</span>
+        <span class="badge badge-planned">planned</span>
+        <span class="badge badge-removed">removed</span>
+      </p>
+      <div class="callout note">
+        <span class="callout-label">Note</span>
+        <p>A short, useful aside. Used for clarifications that are easy to miss in the prose.</p>
+      </div>
+      <div class="callout changed">
+        <span class="callout-label">Changed in 2.4.0</span>
+        <p>When behavior shifts between releases, the page says so in place, with the version that changed it. No guessing whether an example still compiles.</p>
+      </div>
+
+      <h2 id="next">Where to go next</h2>
+      <p>New to the language? Start with <a href="#">Hello world</a> and the <a href="#">language tour</a>. Want to see the compile-time system in depth? Read <a href="variadics.html">Variadic packs</a>.</p>
+
+      <div class="page-nav">
+        <span></span>
+        <a class="next" href="variadics.html"><span class="pn-label">Next</span><span class="pn-title">Variadic packs</span></a>
+      </div>
+    </main>
+
+    <nav class="toc" aria-label="On this page">
+      <div class="toc-title">On this page</div>
+      <a href="#what-you-read">What you read is what executes</a>
+      <a href="#how-docs-work">How these docs work</a>
+      <a href="#next">Where to go next</a>
+    </nav>
+  </div>
+
+  <div class="palette" aria-hidden="true">
+    <div class="palette-box" role="dialog" aria-label="Search the docs">
+      <div class="palette-head">
+        <span class="palette-prompt">/</span>
+        <input class="palette-input" type="text" placeholder="Search the docs" aria-label="Search the docs">
+      </div>
+      <div class="palette-list"></div>
+    </div>
+  </div>
+
+  <script src="docs.js" defer></script>
+</body>
+</html>
