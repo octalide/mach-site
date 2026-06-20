@@ -159,10 +159,10 @@
   <section class="section demos" id="why">
     <div class="section-inner">
       <h2>Why mach</h2>
-      <p class="section-lead why-statement">Mach is small and explicit: what you read is what executes, and every cost is visible in the code that incurs it. The whole toolchain is a single binary &mdash; it builds, links without an external linker, tests, vendors dependencies, and cross-compiles. Nothing is hidden to learn, and nothing has to be wired up.</p>
-      <p class="why-usecase">Built for compilers, runtimes, operating systems, tooling &mdash; anywhere performance is a requirement and hidden behavior is a liability.</p>
+      <p class="section-lead why-statement">Mach is small and explicit: what you read is what executes, and every cost is visible in the code that incurs it. The whole toolchain is a single binary: it builds, links without an external linker, tests, vendors dependencies, and cross-compiles. Nothing is hidden to learn, and nothing has to be wired up.</p>
+      <p class="why-usecase">Built for compilers, runtimes, operating systems, and tooling: anywhere performance is a requirement and hidden behavior is a liability.</p>
 
-      <!-- demo code mirrors the mach README, mach-sieve src/main.mach, and doc/language/variadics.md; valid mach v2.4.1 syntax (#[...] decorators, {}-hole printf, $each packs) — update alongside upstream -->
+      <!-- demo code mirrors the mach README, mach-sieve src/main.mach, and doc/language/variadics.md; valid mach v2.4.1 syntax (#[...] decorators, {}-hole printf, $each packs); update alongside upstream -->
       <div class="demo-list">
 
         <article class="demo">
@@ -171,8 +171,8 @@
               <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
               <span class="code-filename">hello.mach</span>
             </div>
-            <pre><code><span class="kw">use</span>          <span class="mod">std.runtime</span>;
-<span class="kw">use</span> <span class="alias">print</span>:   <span class="mod">std.print</span>;
+            <pre><code><span class="kw">use</span>        <span class="mod">std.runtime</span>;
+<span class="kw">use</span> <span class="alias">print</span>: <span class="mod">std.print</span>;
 
 <span class="deco">#[symbol(</span><span class="str">"main"</span><span class="deco">)]</span>
 <span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
@@ -182,7 +182,7 @@
           </div>
           <div class="demo-caption">
             <span class="demo-principle">No hidden runtime</span>
-            <p>The entry point is ordinary code: you name the symbol and import the runtime yourself. What you read is what executes &mdash; nothing runs that you didn't write.</p>
+            <p>The entry point is ordinary code: you name the symbol and import the runtime yourself. What you read is what executes. Nothing runs that you didn't write.</p>
           </div>
         </article>
 
@@ -195,10 +195,10 @@
             <pre><code><span class="kw">use</span> <span class="alias">alloc</span>:  <span class="mod">std.allocator</span>;
 <span class="kw">use</span> <span class="alias">page</span>:   <span class="mod">std.allocator.page</span>;
 <span class="kw">use</span> <span class="alias">result</span>: <span class="mod">std.types.result</span>;
-<span class="kw">use</span> <span class="mod">std.types.result.Result</span>;
-<span class="kw">use</span> <span class="mod">std.types.string.str</span>;
-<span class="kw">use</span> <span class="mod">std.types.size.usize</span>;
-<span class="kw">use</span> <span class="mod">std.types.bool.bool</span>;
+<span class="kw">use</span>         <span class="mod">std.types.result.Result</span>;
+<span class="kw">use</span>         <span class="mod">std.types.string.str</span>;
+<span class="kw">use</span>         <span class="mod">std.types.size.usize</span>;
+<span class="kw">use</span>         <span class="mod">std.types.bool.bool</span>;
 
 <span class="cmt"># anything that allocates takes one; anything that doesn't never will</span>
 <span class="kw">fun</span> <span class="fn">scratch</span>(<span class="param">count</span>: <span class="type">usize</span>) <span class="type">Result</span>[<span class="type">bool</span>, <span class="type">str</span>] {
@@ -206,7 +206,8 @@
     <span class="kw">var</span> <span class="param">a</span>: <span class="type">alloc.Allocator</span>;
     page.<span class="fn">make</span>(?a);
 
-    <span class="kw">val</span> <span class="param">buf</span>: *<span class="type">bool</span> = result.<span class="fn">unwrap_ok</span>[*<span class="type">bool</span>, <span class="type">str</span>](alloc.<span class="fn">allocate</span>[<span class="type">bool</span>](?a, count));
+    <span class="kw">val</span> <span class="param">r</span>:   <span class="type">Result</span>[*<span class="type">bool</span>, <span class="type">str</span>] = alloc.<span class="fn">allocate</span>[<span class="type">bool</span>](?a, count);
+    <span class="kw">val</span> <span class="param">buf</span>: *<span class="type">bool</span> = result.<span class="fn">unwrap_ok</span>[*<span class="type">bool</span>, <span class="type">str</span>](r);
 
     <span class="cmt"># ... use buf ...</span>
 
@@ -216,7 +217,7 @@
           </div>
           <div class="demo-caption">
             <span class="demo-principle">Manual memory</span>
-            <p>No garbage collector, no hidden allocation. Memory flows through allocators you create and pass explicitly &mdash; and the same one frees what it allocated.</p>
+            <p>No garbage collector, no hidden allocation. Memory flows through allocators you create and pass explicitly, and the same one frees what it allocated.</p>
           </div>
         </article>
 
@@ -226,19 +227,19 @@
               <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
               <span class="code-filename">parse.mach</span>
             </div>
-            <pre><code><span class="kw">use</span>          <span class="mod">std.runtime</span>;
+            <pre><code><span class="kw">use</span>         <span class="mod">std.runtime</span>;
 <span class="kw">use</span> <span class="alias">parse</span>:  <span class="mod">std.text.parse</span>;
 <span class="kw">use</span> <span class="alias">print</span>:  <span class="mod">std.print</span>;
 <span class="kw">use</span> <span class="alias">result</span>: <span class="mod">std.types.result</span>;
-<span class="kw">use</span> <span class="mod">std.types.result.Result</span>;
-<span class="kw">use</span> <span class="mod">std.types.string.str</span>;
+<span class="kw">use</span>         <span class="mod">std.types.result.Result</span>;
+<span class="kw">use</span>         <span class="mod">std.types.string.str</span>;
 
 <span class="deco">#[symbol(</span><span class="str">"main"</span><span class="deco">)]</span>
 <span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
     <span class="cmt"># a fallible call returns a value, not a thrown exception</span>
     <span class="kw">val</span> <span class="param">r</span>: <span class="type">Result</span>[<span class="type">u64</span>, <span class="type">str</span>] = parse.<span class="fn">parse_u64</span>(<span class="param">argv</span>[<span class="num">1</span>], <span class="num">10</span>);
 
-    <span class="cmt"># the error path is visible — you check it before you unwrap</span>
+    <span class="cmt"># the error path is visible, so check it before you unwrap</span>
     <span class="kw">if</span> (result.<span class="fn">is_err</span>[<span class="type">u64</span>, <span class="type">str</span>](r)) {
         print.<span class="fn">printf</span>(<span class="str">"error: {}\n"</span>, result.<span class="fn">unwrap_err</span>[<span class="type">u64</span>, <span class="type">str</span>](r));
         <span class="kw">ret</span> <span class="num">1</span>;
@@ -251,7 +252,7 @@
           </div>
           <div class="demo-caption">
             <span class="demo-principle">Errors are values</span>
-            <p>A fallible call returns a <code>Result</code> you read like any other value. There are no exceptions and no hidden unwinding &mdash; you check the error before you reach the result.</p>
+            <p>A fallible call returns a <code>Result</code> you read like any other value. There are no exceptions and no hidden unwinding. You check the error before you reach the result.</p>
           </div>
         </article>
 
@@ -261,11 +262,11 @@
               <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
               <span class="code-filename">comptime.mach</span>
             </div>
-            <pre><code><span class="kw">use</span>          <span class="mod">std.runtime</span>;
-<span class="kw">use</span> <span class="alias">print</span>:   <span class="mod">std.print</span>;
-<span class="kw">use</span>          <span class="mod">std.types.string.str</span>;
+            <pre><code><span class="kw">use</span>        <span class="mod">std.runtime</span>;
+<span class="kw">use</span> <span class="alias">print</span>: <span class="mod">std.print</span>;
+<span class="kw">use</span>        <span class="mod">std.types.string.str</span>;
 
-<span class="cmt"># a variadic pack is a compile-time sequence — no va_list, no boxing</span>
+<span class="cmt"># a variadic pack is a compile-time sequence: no va_list, no boxing</span>
 <span class="kw">fun</span> <span class="fn">show</span>(<span class="param">va</span>: <span class="ct">...</span>) {
     <span class="cmt"># $each unrolls the body once per argument, at its own type</span>
     <span class="ct">$each</span> <span class="param">a</span> <span class="ct">in</span> <span class="param">va</span> {
@@ -277,14 +278,14 @@
 
 <span class="deco">#[symbol(</span><span class="str">"main"</span><span class="deco">)]</span>
 <span class="kw">fun</span> <span class="fn">main</span>(<span class="param">argc</span>: <span class="type">i64</span>, <span class="param">argv</span>: **<span class="type">u8</span>) <span class="type">i64</span> {
-    <span class="cmt"># one call site → one monomorphized instance, exactly these types</span>
+    <span class="cmt"># one call site becomes one monomorphized instance for exactly these types</span>
     <span class="fn">show</span>(<span class="str">"mach"</span>, <span class="num">42</span>, <span class="str">"no magic"</span>);
     <span class="kw">ret</span> <span class="num">0</span>;
 }</code></pre>
           </div>
           <div class="demo-caption">
             <span class="demo-principle">Comptime, not runtime</span>
-            <p>Variadics resolve entirely at compile time. <code>$each</code> unrolls the pack once per argument and <code>$type_of</code> picks the path per element &mdash; the call monomorphizes into exactly these types, with no <code>va_list</code>, no boxing, and no runtime type tag.</p>
+            <p>Variadics resolve entirely at compile time. <code>$each</code> unrolls the pack once per argument and <code>$type_of</code> picks the path per element. The call monomorphizes into exactly these types, with no <code>va_list</code>, no boxing, and no runtime type tag.</p>
           </div>
         </article>
 
@@ -296,7 +297,7 @@
   <section class="section get-started" id="get-started">
     <div class="section-inner">
       <h2>Get Started</h2>
-      <p class="section-lead">From nothing to a running binary &mdash; one toolchain, no external linker, no build system to configure.</p>
+      <p class="section-lead">From nothing to a running binary: one toolchain, no external linker, no build system to configure.</p>
 
       <div class="terminal code-window">
         <div class="code-header">
@@ -310,15 +311,15 @@
 <span class="term-prompt">$</span> <span class="term-cmd">mach dep pull</span>
 <span class="term-note"># vendors dependencies into dep/, pinned in mach.lock</span>
 <span class="term-prompt">$</span> <span class="term-cmd">mach build .</span>
-<span class="term-note"># one binary builds and links — no external linker</span>
+<span class="term-note"># one binary builds and links, with no external linker</span>
 <span class="term-prompt">$</span> <span class="term-cmd">mach run .</span>
 <span class="term-out">Hello, World!</span></code></pre>
       </div>
 
-      <p class="get-started-next">Next:
-        <a href="https://github.com/octalide/mach/blob/main/doc/language/README.md" target="_blank">language reference</a> &mdash; a pamphlet, not a bible
-        &nbsp;&middot;&nbsp;
-        <a href="https://github.com/octalide/mach-sieve" target="_blank">mach-sieve</a> &mdash; a standalone starting point
+      <p class="get-started-next">Next: read the
+        <a href="https://github.com/octalide/mach/blob/main/doc/language/README.md" target="_blank">language reference</a> (a pamphlet, not a bible),
+        or start from
+        <a href="https://github.com/octalide/mach-sieve" target="_blank">mach-sieve</a> (a standalone starting point).
       </p>
       <a href="https://discord.com/invite/dfWG9NhGj7" target="_blank" class="btn btn-secondary btn-discord">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
