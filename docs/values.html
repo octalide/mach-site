@@ -96,7 +96,7 @@ counter = counter + <span class="num">1</span>;              <span class="cmt">#
       <h2 id="inference">No type inference</h2>
       <p>Every binding declares its type. An untyped numeric literal is checked <em>against</em> the binding's declared type; it never participates in inferring that type.</p>
       <pre class="code"><code><span class="kw">val</span> <span class="param">n</span>: <span class="type">i64</span> = <span class="num">42</span>;                    <span class="cmt"># ok - 42 conforms to i64</span>
-<span class="kw">val</span> <span class="param">x</span>       = <span class="num">42</span>;                    <span class="cmt"># ERROR - no type to check against</span></code></pre>
+<span class="kw">val</span> <span class="param">x</span>      = <span class="num">42</span>;                    <span class="cmt"># ERROR - no type to check against</span></code></pre>
       <div class="callout note">
         <span class="callout-label">Note</span>
         <p>When the surrounding context does not constrain a literal's type, give it a typed suffix such as <code>42i64</code>.</p>
