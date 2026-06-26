@@ -15,7 +15,7 @@
       <img src="../assets/mach_32.png" alt="" width="22" height="22">
       <span>mach</span><span class="brand-docs">docs</span>
     </a>
-    <span class="badge badge-version">v2.4.1</span>
+    <span class="badge badge-version">v2.6.0</span>
     <div class="topbar-spacer"></div>
     <button class="search-trigger" aria-label="Search the docs">
       <span class="st-text">Search</span><span class="kbd">Ctrl K</span>
@@ -152,6 +152,7 @@ ref = <span class="str">"v0.4.0"</span></code></pre>
           <tr><td><code>isa</code></td><td>yes</td><td>-</td><td>Instruction-set architecture. Read by <code>$project.target.arch</code>.</td></tr>
           <tr><td><code>os</code></td><td>yes</td><td>-</td><td>Operating system. Read by <code>$project.target.os</code>.</td></tr>
           <tr><td><code>abi</code></td><td>yes</td><td>-</td><td>Application binary interface (e.g. <code>sysv64</code>, <code>win64</code>). Read by <code>$project.target.abi</code>.</td></tr>
+          <tr><td><code>of</code></td><td>no</td><td>(os default)</td><td>Object format, selected by name (e.g. <code>"raw"</code>). Omit to derive it from the <code>os</code> default (see the recognized values below).</td></tr>
           <tr><td><code>ext</code></td><td>no</td><td><code>""</code></td><td>Artifact filename extension expanded by <code>{ext}</code> (e.g. <code>".exe"</code>).</td></tr>
           <tr><td><code>libs</code></td><td>no</td><td><code>[]</code></td><td>Platform link overlay inherited by every artifact built for this target (see Link inputs).</td></tr>
           <tr><td><code>defines</code></td><td>no</td><td><code>[]</code></td><td>Per-target comptime defines. Each is <code>NAME</code> (a <code>true</code> flag) or <code>NAME=VALUE</code>, readable as <code>$mach.build.NAME</code>.</td></tr>
@@ -161,7 +162,7 @@ ref = <span class="str">"v0.4.0"</span></code></pre>
         <span class="callout-label">Note</span>
         <p><code>native</code> is a reserved name: declaring <code>[target.native]</code> is an error. It is a selector that resolves to a declared target, not a target itself.</p>
       </div>
-      <h3 id="recognized-tuples">Recognized isa / os values</h3>
+      <h3 id="recognized-tuples">Recognized isa / os / object-format values</h3>
       <table>
         <thead><tr><th>Value</th><th>Axis</th><th>Status</th></tr></thead>
         <tbody>
@@ -170,6 +171,9 @@ ref = <span class="str">"v0.4.0"</span></code></pre>
           <tr><td><code>linux</code></td><td>os</td><td>Supported - the primary host and target.</td></tr>
           <tr><td><code>windows</code></td><td>os</td><td>Supported as a cross-compilation target (PE/COFF, Win64 ABI).</td></tr>
           <tr><td><code>darwin</code></td><td>os</td><td>Recognized; vtables exist, but the toolchain is not yet validated end-to-end.</td></tr>
+          <tr><td><code>freestanding</code></td><td>os</td><td>Bare-metal: no syscalls, no OS runtime, a custom <code>_start</code>, and image base 0. Defaults to the <code>raw</code> object format.</td></tr>
+          <tr><td><code>elf</code> / <code>coff</code> / <code>macho</code></td><td>of</td><td>Container object formats for linux / windows / darwin respectively; selected automatically unless <code>of</code> overrides.</td></tr>
+          <tr><td><code>raw</code></td><td>of</td><td>Flat-image writer: each segment is laid at its virtual address and emitted with no container, entered at the image base. The default for <code>freestanding</code>.</td></tr>
         </tbody>
       </table>
 
