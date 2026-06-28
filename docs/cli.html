@@ -22,7 +22,7 @@
     </button>
     <div class="topbar-actions">
       <a href="../index.html">Home</a>
-      <a href="https://github.com/octalide/mach" target="_blank">GitHub</a>
+      <a href="https://github.com/briar-systems/mach" target="_blank">GitHub</a>
     </div>
   </header>
 
@@ -195,7 +195,7 @@
 version = <span class="num">1</span>
 
 [deps.mach-std]
-url = <span class="str">"https://github.com/octalide/mach-std"</span>
+url = <span class="str">"https://github.com/briar-systems/mach-std"</span>
 ref = <span class="str">"branch/dev"</span>
 commit = <span class="str">"6b78ae1e8c3c9cc45e4ab4b916fd191d61e76aff"</span></code></pre>
       <p><code>pull</code> honours the lock except where the manifest ref was edited, where it re-resolves loudly. A checked-out commit that differs from the lock is drift, repaired and reported, never silent. The writer is idempotent: an up-to-date lock is left untouched. Commit <code>mach.lock</code> to pin builds.</p>
