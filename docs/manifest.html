@@ -22,7 +22,7 @@
     </button>
     <div class="topbar-actions">
       <a href="../index.html">Home</a>
-      <a href="https://github.com/octalide/mach" target="_blank">GitHub</a>
+      <a href="https://github.com/briar-systems/mach" target="_blank">GitHub</a>
     </div>
   </header>
 
@@ -122,7 +122,7 @@ emit_ir  = true            <span class="cmt"># emit per-module IR for this profi
 emit_asm = false           <span class="cmt"># emit per-module assembly for this profile</span>
 
 [deps.mach-std]            <span class="cmt"># a dependency: exactly one of git|path, plus ref for git</span>
-git = <span class="str">"https://github.com/octalide/mach-std"</span>
+git = <span class="str">"https://github.com/briar-systems/mach-std"</span>
 ref = <span class="str">"v0.4.0"</span></code></pre>
 
       <h2 id="project"><code>[project]</code></h2>
@@ -297,7 +297,7 @@ libs = [<span class="str">"kernel32.dll"</span>]  <span class="cmt"># the window
 entry = <span class="str">"main.mach"</span>      <span class="cmt"># entry module mach.main, at src/main.mach</span>
 
 [deps.mach-std]
-git = <span class="str">"https://github.com/octalide/mach-std"</span>
+git = <span class="str">"https://github.com/briar-systems/mach-std"</span>
 ref = <span class="str">"branch/dev"</span></code></pre>
       <p><code>mach build .</code> (no <code>--target</code>) selects <code>linux</code> because <code>[project].target = "native"</code> resolves to the host-matching tuple, compiles <code>src/main.mach</code> and its transitive imports - including modules from <code>mach-std</code> vendored at <code>dep/mach-std/</code> - into objects under <code>out/linux/obj/</code>, and links <code>out/linux/bin/mach</code>. The dependency is realized by <code>mach dep pull</code> from the manifest pin, and the build then resolves it purely by that vendor path: no git at build time.</p>
 
